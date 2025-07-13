@@ -1,0 +1,2678 @@
+{
+  "name": "[PROD] Spending Buddy - Expense Tracker",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "// Return only summary data to prevent multiple messages\nconst allTransactions = $input.all();\nconst firstTransaction = allTransactions[0]?.json;\n\nif (firstTransaction?.summary) {\n  return [firstTransaction.summary];\n} else {\n  // Fallback if no summary found\n  const uniqueBanks = [...new Set(allTransactions.map(t => t.json.bank))];\n  const totalTransactions = allTransactions.length;\n  \n  return [{ \n    totalTransactions,\n    uniqueBanks: uniqueBanks.join(', '),\n    currencyTotals: 'Processing complete'\n  }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1480,
+        0
+      ],
+      "id": "aaf1ae3d-8f6e-4cb0-a717-1d326bdddc07",
+      "name": "Extract Summary"
+    },
+    {
+      "parameters": {
+        "chatId": "5543804998",
+        "text": "=✅ *Bulk Import Complete!*\n\n📊 **Summary:**\n- **Total Processed**: {{ $json.totalTransactions }} transactions\n- **Real Expenses**: {{ $json.expenseCount }} | **Transfers**: {{ $json.transferCount }}\n- **Banks**: {{ $json.uniqueBanks }}\n- **Expense Totals**: {{ $json.expenseOnlyDisplay }}\n- **Full Breakdown**: {{ $json.currencyDisplay }}\n\n💾 All transactions saved with transfer flags!\n🔄 *Review transfers in spreadsheet and reclassify if needed*\n\n🎯 *Ready for your expense management!*",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "📊 View Spreadsheet",
+                    "additionalFields": {
+                      "url": "https://docs.google.com/spreadsheets/d/1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU/edit"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -1260,
+        0
+      ],
+      "id": "e5786a80-90a8-48f6-add9-7c99cea2fa56",
+      "name": "Send Bulk Import Summary",
+      "webhookId": "8ff72ad0-3729-435a-a949-de0ca476fb8f",
+      "credentials": {
+        "telegramApi": {
+          "id": "KSpHlwkWmLlEx5TB",
+          "name": "[PROD] - Spending Buddy - Telegram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU",
+          "mode": "list",
+          "cachedResultName": "Expense Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "amount",
+              "displayName": "amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "currency",
+              "displayName": "currency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "merchant",
+              "displayName": "merchant",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "time",
+              "displayName": "time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bank",
+              "displayName": "bank",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "description",
+              "displayName": "description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "messageId",
+              "displayName": "messageId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "processed",
+              "displayName": "processed",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "isInternalTransfer",
+              "displayName": "isInternalTransfer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "transferReason",
+              "displayName": "transferReason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -1700,
+        0
+      ],
+      "id": "59d6c043-f34e-4250-ab2a-1d9be9da28aa",
+      "name": "Bulk Update",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "NutGfEURAzbwzI53",
+          "name": "[PROD] Google Sheets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process the batch results from all input items\nconst batches = $input.all();\nconst allTransactions = [];\n\nbatches.forEach((batch, batchIndex) => {\n  const batchJson = batch.json;\n  if (batchJson.message?.content?.transactions) {\n    batchJson.message.content.transactions.forEach(transaction => {\n      allTransactions.push({\n        ...transaction,\n        id: `SBD-${transaction.messageId ? transaction.messageId.toUpperCase() : ''}`,\n        batchNumber: batchJson.batchNumber,\n        processed: true\n      });\n    });\n  }\n});\n\n// Generate summary statistics with transfer flagging\nconst uniqueBanks = [...new Set(allTransactions.map(t => t.bank))];\nconst allTotals = {};\nlet expenseCount = 0;\nlet transferCount = 0;\n\n// Calculate totals by currency, separating expenses and transfers\nallTransactions.forEach(transaction => {\n  const isTransfer = transaction.isInternalTransfer === true;\n  const currency = transaction.currency || 'UNKNOWN';\n  const amount = parseFloat(transaction.amount || 0);\n  \n  // Count transaction types\n  if (isTransfer) {\n    transferCount++;\n  } else {\n    expenseCount++;\n  }\n  \n  // Track amounts by currency and type\n  if (!allTotals[currency]) {\n    allTotals[currency] = { expenses: 0, transfers: 0, total: 0 };\n  }\n  \n  if (isTransfer) {\n    allTotals[currency].transfers += amount;\n  } else {\n    allTotals[currency].expenses += amount;\n  }\n  allTotals[currency].total += amount;\n});\n\n// Format currency display with breakdown\nconst currencyDisplay = Object.entries(allTotals)\n  .map(([currency, totals]) => {\n    if (totals.transfers > 0) {\n      return `${currency} ${totals.expenses.toLocaleString()} expenses + ${totals.transfers.toLocaleString()} transfers`;\n    }\n    return `${currency} ${totals.expenses.toLocaleString()}`;\n  })\n  .join(' | ');\n\n// Create expense-only display for main summary\nconst expenseOnlyDisplay = Object.entries(allTotals)\n  .filter(([currency, totals]) => totals.expenses > 0)\n  .map(([currency, totals]) => `${currency} ${totals.expenses.toLocaleString()}`)\n  .join(' + ');\n\nconsole.log(`Processed ${allTransactions.length} transactions from all batches`);\nconsole.log(`Expenses: ${expenseCount}, Transfers: ${transferCount}`);\nconsole.log(`Currency breakdown: ${currencyDisplay}`);\n\n// Add summary to first transaction for easy access\nif (allTransactions.length > 0) {\n  allTransactions[0].summary = {\n    totalTransactions: allTransactions.length,\n    expenseCount,\n    transferCount,\n    uniqueBanks: uniqueBanks.join(', '),\n    currencyDisplay,\n    expenseOnlyDisplay,\n    allTotals\n  };\n}\n\nreturn allTransactions;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1920,
+        0
+      ],
+      "id": "7d68f8a0-4dee-4059-9ec1-9cc79702ece8",
+      "name": "Process Batch Result"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process emails in batches for efficiency\nconst allItems = $input.all();\nconst emails = allItems.filter(item => !item.json.isStartMessage);\n\nconsole.log(`Processing ${emails.length} emails in batches`);\n\nif (emails.length === 0) {\n  return [{ nothingToProcess: true, message: \"No emails to process\" }];\n}\n\n// Group emails into batches of 5 for AI processing\nconst batchSize = 5;\nconst batches = [];\n\nfor (let i = 0; i < emails.length; i += batchSize) {\n  const batch = emails.slice(i, i + batchSize);\n  batches.push({\n    batchNumber: Math.floor(i / batchSize) + 1,\n    totalBatches: Math.ceil(emails.length / batchSize),\n    totalEmails: emails.length,\n    emails: batch.map(email => ({\n      id: email.json.id,\n      subject: email.json.subject || '',\n      text: email.json.text || '',\n      from: email.json.from?.text || '',\n      date: email.json.date || ''\n    })),\n    isProcessingBatch: true\n  });\n}\n\nconsole.log(`Created ${batches.length} batches of ${batchSize} emails each`);\nreturn batches;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2500,
+        0
+      ],
+      "id": "604c09ae-0a63-4e47-830d-2de3fc9a0aa6",
+      "name": "Batch Process Emails"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "30ed7b07-662d-4280-b465-d06b8a5130bd",
+              "leftValue": "={{ $json.isStartMessage }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -2720,
+        -100
+      ],
+      "id": "52e23f5f-d26a-49fa-95f6-dbb775c13bce",
+      "name": "Check if Start Message"
+    },
+    {
+      "parameters": {
+        "chatId": "5543804998",
+        "text": "=🔄 *Bulk Import Started* \n\n{{ $json.message }}  \n\nProcessing emails one by one... \n⏳ This may take a few minutes.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -2500,
+        -200
+      ],
+      "id": "af827ef7-0bac-4607-b7c8-bc10c0edae2d",
+      "name": "Send Processing Start Message",
+      "webhookId": "d18f3aa7-ce58-44cc-98f6-448d584f441f",
+      "credentials": {
+        "telegramApi": {
+          "id": "KSpHlwkWmLlEx5TB",
+          "name": "[PROD] - Spending Buddy - Telegram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get all emails from Gmail\nconst emails = $input.all();\n\nconsole.log(`Found ${emails.length} emails to process`);\n\nif (emails.length === 0) {\n  return [{\n    hasEmails: false,\n    totalEmails: 0,\n    message: \"No banking emails found in the last 30 days\"\n  }];\n}\n\n// Return summary info first, then each email for processing\nreturn [\n  {\n    hasEmails: true,\n    totalEmails: emails.length,\n    isStartMessage: true,\n    message: `Found ${emails.length} banking emails to process`\n  },\n  ...emails.map((email, index) => ({\n    ...email.json,\n    emailIndex: index + 1,\n    totalEmails: emails.length,\n    isStartMessage: false\n  }))\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2940,
+        -100
+      ],
+      "id": "9e656363-4531-43d0-8433-62a5291f81bb",
+      "name": "Prepare Email for Processing"
+    },
+    {
+      "parameters": {
+        "operation": "editMessageText",
+        "chatId": "={{ $('Parse Callback Query').item.json.chatId }}",
+        "messageId": "={{ $('Parse Callback Query').item.json.messageId }}",
+        "replyMarkup": "inlineKeyboard",
+        "text": "=✅ *Entry Deleted Successfully!*\n\n*ID:* `{{ $('Parse Callback Query').item.json.expenseId }}`\n\n💾 Changes saved to Spending Buddy tracker!",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -2500,
+        1600
+      ],
+      "id": "1fa728eb-240e-43c7-ae34-f58ed42a3f3b",
+      "name": "Send Success Delete Message",
+      "webhookId": "5cab123e-e233-4b4c-bc77-e57d7d575798",
+      "credentials": {
+        "telegramApi": {
+          "id": "KSpHlwkWmLlEx5TB",
+          "name": "[PROD] - Spending Buddy - Telegram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU",
+          "mode": "list",
+          "cachedResultName": "Expense Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU/edit#gid=0"
+        },
+        "startIndex": "={{ $json.formValue.row_number }}"
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -2720,
+        1600
+      ],
+      "id": "e1bdd616-dd43-499f-b2b5-02abb223ac11",
+      "name": "Delete rows or columns from sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "NutGfEURAzbwzI53",
+          "name": "[PROD] Google Sheets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "editMessageText",
+        "chatId": "={{ $json.chatId }}",
+        "messageId": "={{ $json.messageId }}",
+        "replyMarkup": "inlineKeyboard",
+        "text": "=⚠️ *Delete Expense*  \n\n*Are you sure you want to delete this expense?*\n\n**ID:** `{{ $json.expenseId }}`\n\n*This action cannot be undone.*",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "❌ Yes, Delete",
+                    "additionalFields": {
+                      "callback_data": "=confirm_delete_{{ $json.expenseId }}"
+                    }
+                  },
+                  {
+                    "text": "← Cancel",
+                    "additionalFields": {
+                      "callback_data": "=menu_main_{{ $json.expenseId }}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -2720,
+        1400
+      ],
+      "id": "06e75944-8b0f-44e2-9cfe-9ecf2aa7a78f",
+      "name": "Send Confirmation Message",
+      "webhookId": "fa337f4e-9339-4727-98db-6fefdc1a0af4",
+      "credentials": {
+        "telegramApi": {
+          "id": "KSpHlwkWmLlEx5TB",
+          "name": "[PROD] - Spending Buddy - Telegram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Parse Callback Query').item.json.chatId }}",
+        "text": "=✅ *Entry Updated Successfully!*\n\n*ID:* `{{ $json.id }}`\n\n💾 Changes saved to Spending Buddy tracker!",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "← Back to Main",
+                    "additionalFields": {
+                      "callback_data": "=menu_main_{{ $json.id }}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -1840,
+        700
+      ],
+      "id": "04a54919-4c4f-460f-a7f1-d9e0026a11db",
+      "name": "Send Success Message1",
+      "webhookId": "a0376b28-e3a3-4b92-be4b-0025a7929518",
+      "credentials": {
+        "telegramApi": {
+          "id": "KSpHlwkWmLlEx5TB",
+          "name": "[PROD] - Spending Buddy - Telegram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU",
+          "mode": "list",
+          "cachedResultName": "Expense Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Switch').item.json.expenseId }}",
+            "amount": "={{ $json.originalData.Amount }}",
+            "currency": "={{ $json.originalData.Currency }}",
+            "merchant": "={{ $json.originalData.Merchant }}",
+            "bank": "={{ $json.originalData.Bank }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "amount",
+              "displayName": "amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "currency",
+              "displayName": "currency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "merchant",
+              "displayName": "merchant",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "time",
+              "displayName": "time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "bank",
+              "displayName": "bank",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "description",
+              "displayName": "description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "rawText",
+              "displayName": "rawText",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -2060,
+        700
+      ],
+      "id": "6210b072-f7c0-4a8e-9884-a6a961042260",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "NutGfEURAzbwzI53",
+          "name": "[PROD] Google Sheets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Switch').item.json.chatId }}",
+        "text": "=❌ *Error*\n\n**ID:** `{{ $('Switch').item.json.expenseId }}`\n\n`{{ $json.errors[0] }}`\n\nPlease fix and try again.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -2060,
+        900
+      ],
+      "id": "778bd26b-00af-4976-b078-7fce2b691b38",
+      "name": "Send Error Message",
+      "webhookId": "6159cf38-84d8-4e8b-b852-7214acfef65b",
+      "credentials": {
+        "telegramApi": {
+          "id": "KSpHlwkWmLlEx5TB",
+          "name": "[PROD] - Spending Buddy - Telegram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "6eafd884-167f-498e-8953-c68ae1ea32fc",
+              "leftValue": "={{ $json.isValid }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -2280,
+        800
+      ],
+      "id": "2ca1a3f7-de40-4ef0-a56f-a277088d1ea1",
+      "name": "Check Form Value Validity"
+    },
+    {
+      "parameters": {
+        "jsCode": "const DATE_REGEX = /^\\d{4}-\\d{2}-\\d{2}$/;\nconst TIME_REGEX = /^\\d{2}:\\d{2}$/;\n\nconst initialValue = $(\"Get Row Value\").first().json;\n\nconst formData = $input.first().json.data;\nconst sourceData = {\n  Amount: formData.Amount || initialValue.amount,\n  Currency: formData.Currency || initialValue.currency,\n  Date: formData.Date || initialValue.date,\n  Time: formData.Time || initialValue.time,\n  Merchant: formData.Merchant || initialValue.merchant,\n  Bank: formData.Bank || initialValue.bank,\n};\nconst errors = [];\nconst warnings = [];\nconst updates = {};\n\n// Helper function to check if field has value\nconst hasValue = (value) =>\n  value !== null && value !== undefined && value.toString().trim() !== \"\";\n\n// Validate Amount\nif (hasValue(sourceData.Amount)) {\n  const amount = parseFloat(sourceData.Amount);\n  if (isNaN(amount) || amount <= 0) {\n    errors.push(\"Amount must be a positive number\");\n  } else if (amount > 1000000000) {\n    errors.push(\"Amount is too large (max: 1 billion)\");\n  } else {\n    updates.amount = amount;\n  }\n}\n\n// Validate Currency\nif (hasValue(sourceData.Currency)) {\n  const currency = sourceData.Currency.trim().toUpperCase();\n  if (currency.length < 2 || currency.length > 5) {\n    errors.push(\"Currency code must be 2-5 characters (e.g., IDR, USD)\");\n  } else {\n    updates.currency = currency;\n  }\n}\n\n// Validate Merchant\nif (hasValue(sourceData.Merchant)) {\n  const merchant = sourceData.Merchant.trim();\n  if (merchant.length < 1) {\n    errors.push(\"Merchant name cannot be empty\");\n  } else if (merchant.length > 100) {\n    errors.push(\"Merchant name too long (max: 100 characters)\");\n  } else {\n    updates.merchant = merchant;\n  }\n}\n\n// Validate Bank\nif (hasValue(sourceData.Bank)) {\n  const bank = sourceData.Bank.trim();\n  if (bank.length < 1) {\n    errors.push(\"Bank name cannot be empty\");\n  } else if (bank.length > 50) {\n    errors.push(\"Bank name too long (max: 50 characters)\");\n  } else {\n    updates.bank = bank;\n  }\n}\n\n// Validate Date\nif (hasValue(sourceData.Date)) {\n  if (!DATE_REGEX.test(sourceData.Date)) {\n    errors.push(\"Invalid date format. Use YYYY-MM-DD\");\n  } else {\n    const date = new Date(sourceData.Date);\n    const now = new Date();\n    const oneYearAgo = new Date(\n      now.getFullYear() - 1,\n      now.getMonth(),\n      now.getDate(),\n    );\n    const oneYearFromNow = new Date(\n      now.getFullYear() + 1,\n      now.getMonth(),\n      now.getDate(),\n    );\n\n    if (date < oneYearAgo) {\n      warnings.push(\"Date is more than 1 year ago\");\n    } else if (date > oneYearFromNow) {\n      errors.push(\"Date cannot be more than 1 year in the future\");\n    }\n\n    updates.date = sourceData.Date;\n  }\n}\n\n// Validate Time\nif (hasValue(sourceData.Time)) {\n  if (!TIME_REGEX.test(sourceData.Time)) {\n    errors.push(\"Invalid time format. Use HH:MM (e.g., 14:30)\");\n  } else {\n    const [hour, minute] = sourceData.Time.split(\":\").map(Number);\n    if (hour < 0 || hour > 23) {\n      errors.push(\"Hour must be between 00-23\");\n    } else if (minute < 0 || minute > 59) {\n      errors.push(\"Minute must be between 00-59\");\n    } else {\n      updates.time = sourceData.Time;\n    }\n  }\n}\n\n// Check if any updates were made\nconst hasUpdates = Object.keys(updates).length > 0;\n\nif (!hasUpdates && errors.length === 0) {\n  warnings.push(\"No fields were updated\");\n}\n\nreturn {\n  isValid: errors.length === 0,\n  hasUpdates,\n  updates,\n  errors,\n  warnings,\n  originalData: sourceData,\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2500,
+        800
+      ],
+      "id": "0819d0aa-b200-4065-909a-24f3b70c3b27",
+      "name": "Validate Form Value"
+    },
+    {
+      "parameters": {
+        "jsCode": "const parsedQuery = $('Parse Callback Query').first().json\nconst formValue = $input.first().json\n\nreturn {...parsedQuery, formValue}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3160,
+        1100
+      ],
+      "id": "1b384aa7-648f-4df8-b8b4-4d5fcbebb4a5",
+      "name": "Embed Form Value"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU",
+          "mode": "list",
+          "cachedResultName": "Expense Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "id",
+              "lookupValue": "={{ $json.expenseId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -3380,
+        1100
+      ],
+      "id": "fcadb158-a0c4-4a7e-98e2-8e74b5ff10e6",
+      "name": "Get Row Value",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "NutGfEURAzbwzI53",
+          "name": "[PROD] Google Sheets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "={{ $json.chatId }}",
+        "message": "=*✏️ Edit Expense*\n\nCurrent Expense: `{{ $json.expenseId }}`\n\nUpdate any fields you want to change:",
+        "responseType": "customForm",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Amount",
+              "fieldType": "number",
+              "placeholder": "={{ $json.formValue.amount }}"
+            },
+            {
+              "fieldLabel": "Currency",
+              "placeholder": "={{ $json.formValue.currency }}"
+            },
+            {
+              "fieldLabel": "Merchant",
+              "placeholder": "={{ $json.formValue.merchant }}"
+            },
+            {
+              "fieldLabel": "Bank",
+              "placeholder": "={{ $json.formValue.bank }}"
+            }
+          ]
+        },
+        "options": {
+          "limitWaitTime": {
+            "values": {
+              "resumeAmount": 5,
+              "resumeUnit": "minutes"
+            }
+          },
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -2720,
+        800
+      ],
+      "id": "f2a9ffc1-5550-47f9-9f76-afcf874ea50f",
+      "name": "Send message and wait for response",
+      "webhookId": "33a402cb-9779-462b-8d14-0a8bc31d34bd",
+      "credentials": {
+        "telegramApi": {
+          "id": "KSpHlwkWmLlEx5TB",
+          "name": "[PROD] - Spending Buddy - Telegram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "editMessageText",
+        "chatId": "={{ $('Parse Callback Query').item.json.chatId }}",
+        "messageId": "={{ $('Parse Callback Query').item.json.messageId }}",
+        "replyMarkup": "inlineKeyboard",
+        "text": "=💰 *Expense*\n\nID: `{{ $json.formValue.id }}`\nAmount: {{ $json.formValue.currency }} {{ $json.formValue.amount.toLocaleString() }}\nMerchant: {{ $json.formValue.merchant }}\nCategory: {{ $json.formValue.category }}\nBank: {{ $json.formValue.bank }}\nDate: {{ $json.formValue.date }} {{ $json.formValue.time }}\n\nChoose action:",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "🏷️ Change Category",
+                    "additionalFields": {
+                      "callback_data": "=menu_category_{{ $json.formValue.id }}"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "✏️ Edit Details",
+                    "additionalFields": {
+                      "callback_data": "=edit_form_{{ $json.formValue.id }}"
+                    }
+                  },
+                  {
+                    "text": "❌ Delete Expense",
+                    "additionalFields": {
+                      "callback_data": "=prompt_delete_{{ $json.formValue.id }}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -2720,
+        1200
+      ],
+      "id": "983a2118-deb3-47c7-a283-ef4708d1a7a5",
+      "name": "Edit a text message",
+      "webhookId": "1d85f979-5530-45ce-bb2e-c16d256e4f97",
+      "credentials": {
+        "telegramApi": {
+          "id": "KSpHlwkWmLlEx5TB",
+          "name": "[PROD] - Spending Buddy - Telegram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const callbackData = $input.first().json.callback_query.data; // e.g., \"menu_category_SBD-12345\"\nconst message = $input.first().json.callback_query.message\nconst chatId = message.chat.id;\nconst messageId = message.message_id;\n\n// Parse the callback data\nconst parts = callbackData.split('_');\nconst action = parts[0]; // \"menu\", \"edit\", \"delete\"\nconst subAction = parts[1]; // \"category\", \"amount\", \"food\", etc.\nconst expenseId = parts[3] || parts[2] // \"SBD-12345\"\nconst routeKey =  `${action}_${subAction}` // Combined key for switch routing\n\nconsole.log(routeKey, expenseId)\n\nreturn {\n  action,\n  subAction,\n  expenseId,\n  chatId,\n  messageId,\n  originalCallbackData: callbackData,\n  routeKey \n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3600,
+        1100
+      ],
+      "id": "0533d38c-d96b-496d-b1f5-ef7da10c8078",
+      "name": "Parse Callback Query"
+    },
+    {
+      "parameters": {
+        "operation": "editMessageText",
+        "chatId": "={{ $('Parse Callback Query').item.json.chatId }}",
+        "messageId": "={{ $('Parse Callback Query').item.json.messageId }}",
+        "replyMarkup": "inlineKeyboard",
+        "text": "=✅ *Category Updated Successfully!*\n\n*Expense:* `{{ $('Parse Category').item.json.expenseId }}`\n*New Category:* {{ $('Parse Category').item.json.newCategory }}  \n\n💾 Changes saved to Spending Buddy tracker!",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "← Back to Main",
+                    "additionalFields": {
+                      "callback_data": "=menu_main_{{ $json.id }}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -2280,
+        1000
+      ],
+      "id": "bf9e2b88-9349-49d0-8f62-ecfef4e5b47d",
+      "name": "Send Success Message",
+      "webhookId": "3089f611-1b46-471a-9fe7-ed0b5d7775a2",
+      "credentials": {
+        "telegramApi": {
+          "id": "KSpHlwkWmLlEx5TB",
+          "name": "[PROD] - Spending Buddy - Telegram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU",
+          "mode": "list",
+          "cachedResultName": "Expense Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.expenseId }}",
+            "category": "={{ $json.newCategory }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "amount",
+              "displayName": "amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "currency",
+              "displayName": "currency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "merchant",
+              "displayName": "merchant",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "time",
+              "displayName": "time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bank",
+              "displayName": "bank",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "description",
+              "displayName": "description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "rawText",
+              "displayName": "rawText",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -2500,
+        1000
+      ],
+      "id": "4f348f8b-903d-49cf-b847-24ce34f785ae",
+      "name": "Update Category",
+      "alwaysOutputData": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "NutGfEURAzbwzI53",
+          "name": "[PROD] Google Sheets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Parse the category from callback data\n// e.g., \"edit_category_food_SBD-12345\" -> extract \"food\"\nconst callbackData = $json.originalCallbackData;\nconst parts = callbackData.split('_');\nconst newCategory = parts[2]; // \"food\", \"transportation\", etc.\n\n// Validate category\nconst VALID_CATEGORIES = ['food', 'accommodation', 'entertainment', 'transportation', 'shopping', 'utilities', 'healthcare', 'other'];\n\nif (!VALID_CATEGORIES.includes(newCategory)) {\n  throw new Error(`Invalid category: ${newCategory}`);\n}\n\nreturn {\n  ...$json,\n  newCategory,\n  isValidCategory: true\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2720,
+        1000
+      ],
+      "id": "ccdc5fa0-5658-4c9d-9aff-cec3f2911676",
+      "name": "Parse Category"
+    },
+    {
+      "parameters": {
+        "operation": "editMessageText",
+        "chatId": "={{ $json.chatId }}",
+        "messageId": "={{ $json.messageId }}",
+        "replyMarkup": "inlineKeyboard",
+        "text": "=💰 *Expense:* `{{ $json.expenseId }}`\n\n🏷️ *Select New Category:*",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "🍽️ Food",
+                    "additionalFields": {
+                      "callback_data": "=edit_category_food_{{ $json.expenseId }}"
+                    }
+                  },
+                  {
+                    "text": "🚗 Transportation",
+                    "additionalFields": {
+                      "callback_data": "=edit_category_transportation_{{ $json.expenseId }}"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "🛍️ Shopping",
+                    "additionalFields": {
+                      "callback_data": "=edit_category_shopping_{{ $json.expenseId }}"
+                    }
+                  },
+                  {
+                    "text": "🎮 Entertainment",
+                    "additionalFields": {
+                      "callback_data": "=edit_category_entertainment_{{ $json.expenseId }}"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "🏠 Accommodation",
+                    "additionalFields": {
+                      "callback_data": "=edit_category_accommodation_{{ $json.expenseId }}"
+                    }
+                  },
+                  {
+                    "text": "⚡ Utilities",
+                    "additionalFields": {
+                      "callback_data": "=edit_category_utilities_{{ $json.expenseId }}"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "🏥 Healthcare",
+                    "additionalFields": {
+                      "callback_data": "=edit_category_healthcare_{{ $json.expenseId }}"
+                    }
+                  },
+                  {
+                    "text": "📦 Other",
+                    "additionalFields": {
+                      "callback_data": "=edit_category_other_{{ $json.expenseId }}"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "← Back to Main",
+                    "additionalFields": {
+                      "callback_data": "=menu_main_{{ $json.expenseId }}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -2720,
+        600
+      ],
+      "id": "79efae60-3b29-4c6e-9a3e-817290b2766d",
+      "name": "Show Change Category",
+      "webhookId": "b7f113ae-9714-420c-a5e3-5c331b9b86df",
+      "credentials": {
+        "telegramApi": {
+          "id": "KSpHlwkWmLlEx5TB",
+          "name": "[PROD] - Spending Buddy - Telegram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.routeKey }}",
+                    "rightValue": "menu_category",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "6bf5f154-a089-4adb-8ea6-ff2f9b0ee6bd"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Show Category Menu"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "848ee0cd-92e8-469f-9405-53e63d53ec21",
+                    "leftValue": "={{ $json.routeKey }}",
+                    "rightValue": "edit_form",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Edit Form"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "5f813377-7653-43b6-932b-fb9b7e3fce20",
+                    "leftValue": "={{ $json.routeKey }}",
+                    "rightValue": "edit_category",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Update Category"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "23998dba-c5bb-407d-b8a5-767ff01ceaeb",
+                    "leftValue": "={{ $json.routeKey }}",
+                    "rightValue": "menu_main",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Back to Main Menu"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ac99ae20-2cee-4254-b532-8e4261bb7082",
+                    "leftValue": "={{ $json.routeKey }}",
+                    "rightValue": "prompt_delete",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Show Confirm Delete"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "40b7da09-54ef-4674-b4a2-4e94f50d21fd",
+                    "leftValue": "={{ $json.routeKey }}",
+                    "rightValue": "confirm_delete",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Confirm Delete"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "none"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -2940,
+        1040
+      ],
+      "id": "7cbe7682-f418-4c3e-bb37-4a18ba365161",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "callback_query"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -3820,
+        1100
+      ],
+      "id": "0a673578-727e-4486-aba8-29ced13a266a",
+      "name": "Callback Query",
+      "webhookId": "e378822f-f6f8-48b3-a33a-13ee94ba5464",
+      "credentials": {
+        "telegramApi": {
+          "id": "KSpHlwkWmLlEx5TB",
+          "name": "[PROD] - Spending Buddy - Telegram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "simple": false,
+        "filters": {
+          "q": "=(from:noreply@jago.com OR from:jenius_noreply@smbci.com OR from:noreply.livin@bankmandiri.co.id) after:{{ $now.minus({days: 30}).toFormat('yyyy/MM/dd') }}",
+          "readStatus": "both"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -3160,
+        -100
+      ],
+      "id": "a5fd971c-da01-432c-a536-a4fbcf5510c6",
+      "name": "Get many messages",
+      "webhookId": "48212619-6760-4262-a0dd-1aa6a6104a88",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "zgqNK6c2ZHfTn7re",
+          "name": "[PROD] Gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d5583602-e773-4ee2-a350-1f79bbf4ac68",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "22e47038-185b-4cd8-907e-bfdaa78c3b7a",
+              "name": "amount",
+              "value": "={{ $json.amount }}",
+              "type": "number"
+            },
+            {
+              "id": "4d826159-d89c-4d54-840c-af1ce1241448",
+              "name": "currency",
+              "value": "={{ $json.currency }}",
+              "type": "string"
+            },
+            {
+              "id": "913a548c-5dd3-4a6c-80da-3b041410d602",
+              "name": "merchant",
+              "value": "={{ $json.merchant }}",
+              "type": "string"
+            },
+            {
+              "id": "2ef94b3f-67b9-454a-a103-a0440c15d5a9",
+              "name": "date",
+              "value": "={{ $json.date }} ",
+              "type": "string"
+            },
+            {
+              "id": "e2669915-a29b-4b68-9607-88cee4b88145",
+              "name": "time",
+              "value": "={{ $json.time }}",
+              "type": "string"
+            },
+            {
+              "id": "8a690e8a-842f-4657-b072-d06734ee4eb6",
+              "name": "category",
+              "value": "={{ $json.category }}",
+              "type": "string"
+            },
+            {
+              "id": "bafe6227-171a-4136-981d-213e2b1d9921",
+              "name": "bank",
+              "value": "={{ $json.bank }}",
+              "type": "string"
+            },
+            {
+              "id": "b56948b0-1c6c-4c2d-85b5-724f4424520d",
+              "name": "description",
+              "value": "={{ $json.description }}",
+              "type": "string"
+            },
+            {
+              "id": "8b96d820-2df8-4039-9330-bfcf495001f9",
+              "name": "isInternalTransfer",
+              "value": "={{ $json.isInternalTransfer }}",
+              "type": "boolean"
+            },
+            {
+              "id": "90b17f17-317c-476a-8d3e-36f78deab544",
+              "name": "transferReason",
+              "value": "={{ $json.transferReason }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1920,
+        340
+      ],
+      "id": "52a632e4-aabc-4e0d-a695-43013888fd52",
+      "name": "Format Data for CSV"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU",
+          "mode": "list",
+          "cachedResultName": "Expense Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "amount",
+              "displayName": "amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "currency",
+              "displayName": "currency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "merchant",
+              "displayName": "merchant",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "time",
+              "displayName": "time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "bank",
+              "displayName": "bank",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "description",
+              "displayName": "description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "messageId",
+              "displayName": "messageId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "processed",
+              "displayName": "processed",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "isInternalTransfer",
+              "displayName": "isInternalTransfer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "transferReason",
+              "displayName": "transferReason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -1700,
+        340
+      ],
+      "id": "3f72bd90-846d-4756-8cad-7b92604ef30f",
+      "name": "Update Row",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "NutGfEURAzbwzI53",
+          "name": "[PROD] Google Sheets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const html = $input.first().json?.html ?? \"\";\nconst category = html.match(/GrabFood/i) ? \"food\" : \"transportation\";\nreturn { ...$('Get Grab Transaction ID').first().json, category };\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2140,
+        260
+      ],
+      "id": "1380ee69-764a-44b7-bab6-076d17d01a12",
+      "name": "Determine Grab Transaction Category"
+    },
+    {
+      "parameters": {
+        "jsCode": "const rawText = $input.first().json.rawText ?? ''\nconst grabIdMatch = rawText.match(/([A-Z]-[A-Z0-9]{12,18})/);\nconst transactionId = grabIdMatch ? grabIdMatch[1] : null;\n\nreturn { ...$input.first().json, transactionId };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2580,
+        260
+      ],
+      "id": "e17a1be7-a09d-4778-a1f8-d6ecb69f3ce1",
+      "name": "Get Grab Transaction ID"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "simple": false,
+        "filters": {
+          "q": "=from:no-reply@grab.com \"{{ $json.transactionId }}\""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -2360,
+        260
+      ],
+      "id": "05af6184-40bb-49df-8307-11ab639eea47",
+      "name": "Search for Grab E-Receipt with Specific ID",
+      "webhookId": "d71384d6-64d4-4a75-8d42-b1147f05d58f",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "zgqNK6c2ZHfTn7re",
+          "name": "[PROD] Gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d5583602-e773-4ee2-a350-1f79bbf4ac68",
+              "name": "id",
+              "value": "=SBD-{{ $json.message.content.messageId.toUpperCase() }}",
+              "type": "string"
+            },
+            {
+              "id": "22e47038-185b-4cd8-907e-bfdaa78c3b7a",
+              "name": "amount",
+              "value": "={{ $json.message.content.amount }}",
+              "type": "number"
+            },
+            {
+              "id": "4d826159-d89c-4d54-840c-af1ce1241448",
+              "name": "currency",
+              "value": "={{ $json.message.content.currency }}",
+              "type": "string"
+            },
+            {
+              "id": "913a548c-5dd3-4a6c-80da-3b041410d602",
+              "name": "merchant",
+              "value": "={{ $json.message.content.merchant }}",
+              "type": "string"
+            },
+            {
+              "id": "2ef94b3f-67b9-454a-a103-a0440c15d5a9",
+              "name": "date",
+              "value": "={{ $json.message.content.date }}",
+              "type": "string"
+            },
+            {
+              "id": "e2669915-a29b-4b68-9607-88cee4b88145",
+              "name": "time",
+              "value": "={{ $json.message.content.time }}",
+              "type": "string"
+            },
+            {
+              "id": "8a690e8a-842f-4657-b072-d06734ee4eb6",
+              "name": "category",
+              "value": "={{ $json.message.content.category }}",
+              "type": "string"
+            },
+            {
+              "id": "bafe6227-171a-4136-981d-213e2b1d9921",
+              "name": "bank",
+              "value": "={{ $json.message.content.bank }}",
+              "type": "string"
+            },
+            {
+              "id": "b56948b0-1c6c-4c2d-85b5-724f4424520d",
+              "name": "description",
+              "value": "={{ $json.message.content.description }}",
+              "type": "string"
+            },
+            {
+              "id": "7bb684c3-ba21-40d8-911b-4dad7384ff28",
+              "name": "rawText",
+              "value": "={{ $json.message.content.rawText }}",
+              "type": "string"
+            },
+            {
+              "id": "3151ad84-7619-4b6d-aa58-17358eb8b2ac",
+              "name": "isInternalTransfer",
+              "value": "={{ $json.message.content.isInternalTransfer }}",
+              "type": "boolean"
+            },
+            {
+              "id": "8d28397d-8299-40bf-913b-f74ed368b809",
+              "name": "transferReason",
+              "value": "={{ $json.message.content.transferReason }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3020,
+        340
+      ],
+      "id": "ec1235bc-351a-4b14-b0c5-11f932ab15ca",
+      "name": "Format Data for Parsing"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "114b779a-59d5-4b39-b00e-8b3a5c13397b",
+              "leftValue": "={{ $json.merchant }}",
+              "rightValue": "/grab/i",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -2800,
+        340
+      ],
+      "id": "d4b10337-49de-4e54-a91f-82d38ecfeb69",
+      "name": "Should Do Special Parsing"
+    },
+    {
+      "parameters": {
+        "chatId": "=5543804998",
+        "text": "🔄 Syncing transactions from last 30 days...",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -3380,
+        -100
+      ],
+      "id": "8b2b2bf4-df4d-4b3b-9bce-95fcd2e73900",
+      "name": "Send Initial Message",
+      "webhookId": "5bb64ab4-a049-4d49-8dd8-599c7dd14f02",
+      "credentials": {
+        "telegramApi": {
+          "id": "KSpHlwkWmLlEx5TB",
+          "name": "[PROD] - Spending Buddy - Telegram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "90ffffde-51a5-45c0-96da-5b6367ba280f",
+              "leftValue": "={{ $json.message.text }}",
+              "rightValue": "/init",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "1b19bcfe-0e43-4cca-bb4f-bab8ff98be3a",
+              "leftValue": "={{ $json.message.text }}",
+              "rightValue": "/start",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -3600,
+        -100
+      ],
+      "id": "5988580e-0387-45da-86b4-8826d1d53c70",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -3820,
+        -100
+      ],
+      "id": "521af205-4786-4b59-9383-76f6a3778fd6",
+      "name": "Telegram Trigger",
+      "webhookId": "31f7edf7-9c33-41e7-a42f-6bd08848e5f1",
+      "credentials": {
+        "telegramApi": {
+          "id": "KSpHlwkWmLlEx5TB",
+          "name": "[PROD] - Spending Buddy - Telegram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => {\n  return {\n    id: item.json.id,\n    subject: item.json.subject ?? null,\n    text: item.json.text ?? null,\n    date: item.json.date ?? null,\n    from: item.json.from?.text ?? null\n  }\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3600,
+        340
+      ],
+      "id": "8ea118fd-95fd-4978-997d-79b2687c6e3e",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Current Expenses\nconst currentExpense = $('Format Data for Parsing').first().json\n\n// Get current date formats for filtering\nconst currentMonth = $now.toFormat('yyyy-MM');\nconst today = $now.toFormat('yyyy-MM-dd');\n\n// Get all input data safely\nconst allData = $input.all() || [];\n\n// Filter expenses by time period AND exclude internal transfers\nconst monthlyExpenses = allData.filter(item => {\n  const date = item?.json?.date;\n  const isTransfer = item?.json?.isInternalTransfer === true;\n  return date && typeof date === 'string' && date.startsWith(currentMonth) && !isTransfer;\n});\n\nconst dailyExpenses = allData.filter(item => {\n  const date = item?.json?.date;\n  const isTransfer = item?.json?.isInternalTransfer === true;\n  return date && date === today && !isTransfer;\n});\n\n// Calculate totals by currency (expenses only)\nconst dailyTotals = {};\nconst monthlyTotals = {};\n\n// Process daily expenses (excluding transfers)\ndailyExpenses.forEach(expense => {\n  const currency = expense?.json?.currency;\n  const amount = parseFloat(String(expense?.json?.amount || 0));\n  \n  if (currency && !isNaN(amount)) {\n    dailyTotals[currency] = (dailyTotals[currency] || 0) + amount;\n  }\n});\n\n// Process monthly expenses (excluding transfers)\nmonthlyExpenses.forEach(expense => {\n  const currency = expense?.json?.currency;\n  const amount = parseFloat(String(expense?.json?.amount || 0));\n  \n  if (currency && !isNaN(amount)) {\n    monthlyTotals[currency] = (monthlyTotals[currency] || 0) + amount;\n  }\n});\n\n// Format for display (expenses only)\nconst dailyDisplay = Object.entries(dailyTotals)\n  .map(([currency, amount]) => `${currency} ${amount.toLocaleString()}`)\n  .join(' + ') || 'No expenses today';\n\nconst monthlyDisplay = Object.entries(monthlyTotals)\n  .map(([currency, amount]) => `${currency} ${amount.toLocaleString()}`)\n  .join(' + ') || 'No expenses this month';\n\n// Count transfers for additional info\nconst dailyTransfers = allData.filter(item => {\n  const date = item?.json?.date;\n  const isTransfer = item?.json?.isInternalTransfer === true;\n  return date && date === today && isTransfer;\n}).length;\n\nconst monthlyTransfers = allData.filter(item => {\n  const date = item?.json?.date;\n  const isTransfer = item?.json?.isInternalTransfer === true;\n  return date && typeof date === 'string' && date.startsWith(currentMonth) && isTransfer;\n}).length;\n\nreturn {\n  currentExpense,\n  dailyTotals,\n  monthlyTotals,\n  dailyDisplay,\n  monthlyDisplay,\n  dailyTransfers,\n  monthlyTransfers\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1260,
+        340
+      ],
+      "id": "522eb0a7-e911-48b4-a873-b91df01a6744",
+      "name": "Get Summary"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU",
+          "mode": "list",
+          "cachedResultName": "Expense Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vKqe1hXfZ52UUXh7gmHZB2oRDg1lSNkFjXCTtFYW7LU/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -1480,
+        340
+      ],
+      "id": "ceea754c-f26e-499f-8594-41fc3312554c",
+      "name": "Get All Rows",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "NutGfEURAzbwzI53",
+          "name": "[PROD] Google Sheets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are an Indonesian banking transaction parser. Extract transaction information from a single email and return a JSON object.\n\nDetermine if this is a real expense or likely internal transfer, then extract:\n{\n  \"messageId\": \"include the message ID provided\",\n  \"amount\": \"numeric value only (no currency symbols)\",\n  \"currency\": \"currency code (IDR, USD, EUR, etc.)\",\n  \"merchant\": \"merchant/recipient name\",\n  \"date\": \"YYYY-MM-DD format\",\n  \"time\": \"HH:MM format\",\n  \"category\": \"food|accommodation|entertainment|transportation|shopping|utilities|healthcare|other\",\n  \"bank\": \"Jago|Jenius|Mandiri\",\n  \"description\": \"full transaction description\",\n  \"rawText\": \"the input text before parsing\",\n  \"isInternalTransfer\": true/false,\n  \"transferReason\": \"reason if flagged as transfer\"\n}\n\n**Flag as internal transfer (isInternalTransfer: true) if:**\n- Transfer to/from personal names (like \"ZAKY SYIHAB HATMOKO\")\n- Inter-bank transfers or account funding\n- Top-ups, refunds, temporary holds\n- Transactions between your own accounts\n\n**Flag as real expense (isInternalTransfer: false) if:**\n- Merchant purchases (restaurants, stores, services)\n- Subscriptions and bills\n- Transportation, entertainment, shopping\n\n**Always include the transaction** - let the user decide what counts as an expense.\n\nCurrency rules: Look for IDR, USD, EUR, etc. If you see \"Rp\" assume IDR.\n\nReturn only the JSON object, no additional text.",
+              "role": "system"
+            },
+            {
+              "content": "=Message ID: {{ $json.id }}\n\nEmail content:\n{{ $json.text }}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -3380,
+        340
+      ],
+      "id": "66cb840a-0c25-4c88-8854-1a6be9751521",
+      "name": "Parse Email",
+      "credentials": {
+        "openAiApi": {
+          "id": "h4ZNbF0PVebEzEq4",
+          "name": "[PROD] - Spending Buddy - OpenAI "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "5543804998",
+        "text": "={{ $json.notificationMessage }}",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "🏷️ Change Category",
+                    "additionalFields": {
+                      "callback_data": "=menu_category_{{ $json.currentExpense.id }}"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "✏️ Edit Details",
+                    "additionalFields": {
+                      "callback_data": "=edit_form_{{ $json.currentExpense.id }}"
+                    }
+                  },
+                  {
+                    "text": "❌ Delete Expense",
+                    "additionalFields": {
+                      "callback_data": "=prompt_delete_{{ $json.currentExpense.id }}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -820,
+        340
+      ],
+      "id": "c55ff1e9-f77b-4b8e-9873-64db265670e9",
+      "name": "Send a text message",
+      "webhookId": "3e325a63-b1af-4143-b61c-0913436cb9e2",
+      "credentials": {
+        "telegramApi": {
+          "id": "KSpHlwkWmLlEx5TB",
+          "name": "[PROD] - Spending Buddy - Telegram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "value": 5,
+              "unit": "minutes"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {
+          "q": "from:noreply@jago.com OR from:jenius_noreply@smbci.com OR from:noreply.livin@bankmandiri.co.id",
+          "readStatus": "both"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -3820,
+        340
+      ],
+      "id": "2db5c519-814b-478f-a1b5-45d4562e67eb",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "zgqNK6c2ZHfTn7re",
+          "name": "[PROD] Gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json;\nconst expense = data.currentExpense;\n\nlet message;\n\nif (expense.isInternalTransfer) {\n  // Transfer notification\n  message = `🔄 *Internal Transfer Detected*\n\nID: ${expense.id}\nAmount: ${expense.currency} ${expense.amount.toLocaleString()}\nTo/From: ${expense.merchant}\nBank: ${expense.bank}\nDate: ${expense.date} ${expense.time}\nReason: ${expense.transferReason || 'Internal transfer'}\n\n💡 *This was flagged as a transfer, not an expense.*\n📊 Expense totals exclude transfers.\n\n✨ Added to Spending Buddy tracker!`;\n\n} else {\n  // Regular expense notification\n  message = `💰 *New Expense Added*\n\nID: ${expense.id}\nAmount: ${expense.currency} ${expense.amount.toLocaleString()}\nMerchant: ${expense.merchant}\nCategory: ${expense.category}\nBank: ${expense.bank}\nDate: ${expense.date} ${expense.time}\n\n📊 *Summary:*\nToday's Total: ${data.dailyDisplay}\nMonthly Total: ${data.monthlyDisplay}\n\n✨ Added to Spending Buddy tracker!`;\n}\n\nreturn {\n  ...data,\n  notificationMessage: message\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1040,
+        340
+      ],
+      "id": "62dba483-6e6a-40d0-9b43-73cb4a9caadb",
+      "name": "Format Notification Message"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are an Indonesian banking transaction parser. Extract transaction information from multiple emails and return a JSON array.\n\nFor each transaction, determine if it's a real expense or likely internal transfer, then extract:\n{\n  \"messageId\": \"email ID\",\n  \"amount\": \"numeric value only\", \n  \"currency\": \"IDR/USD/EUR etc\",\n  \"merchant\": \"merchant name\",\n  \"date\": \"YYYY-MM-DD\",\n  \"time\": \"HH:MM\", \n  \"category\": \"food|accommodation|entertainment|transportation|shopping|utilities|healthcare|other\",\n  \"bank\": \"Jago|Jenius|Mandiri\",\n  \"description\": \"transaction description\",\n  \"isInternalTransfer\": true/false,\n  \"transferReason\": \"reason if flagged as transfer\"\n}\n\n**Flag as internal transfer (isInternalTransfer: true) if:**\n- Transfer to/from personal names (like \"ZAKY SYIHAB HATMOKO\")\n- Inter-bank transfers or account funding\n- Top-ups, refunds, temporary holds\n- Transactions between your own accounts\n\n**Flag as real expense (isInternalTransfer: false) if:**\n- Merchant purchases (restaurants, stores, services)\n- Subscriptions and bills\n- Transportation, entertainment, shopping\n\n**Always include ALL transactions** - let the user decide what counts as an expense.\n\nReturn a JSON array of all transactions with proper flagging.",
+              "role": "system"
+            },
+            {
+              "content": "=Process this batch of {{ $json.emails.length }} emails:\n\n{{ $json.emails.map((email, i) => `Email ${i+1} (ID: ${email.id}):\nSubject: ${email.subject}\nFrom: ${email.from}\nContent: ${email.text}\n---`).join('\\n') }}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -2280,
+        0
+      ],
+      "id": "308b4269-8e6e-44ea-9872-e0847c3d94b1",
+      "name": "Parse Multiple Emails",
+      "credentials": {
+        "openAiApi": {
+          "id": "h4ZNbF0PVebEzEq4",
+          "name": "[PROD] - Spending Buddy - OpenAI "
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Extract Summary": {
+      "main": [
+        [
+          {
+            "node": "Send Bulk Import Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bulk Update": {
+      "main": [
+        [
+          {
+            "node": "Extract Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Batch Result": {
+      "main": [
+        [
+          {
+            "node": "Bulk Update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Batch Process Emails": {
+      "main": [
+        [
+          {
+            "node": "Parse Multiple Emails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check if Start Message": {
+      "main": [
+        [
+          {
+            "node": "Send Processing Start Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Batch Process Emails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Email for Processing": {
+      "main": [
+        [
+          {
+            "node": "Check if Start Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete rows or columns from sheet": {
+      "main": [
+        [
+          {
+            "node": "Send Success Delete Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send Success Message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Form Value Validity": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Error Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Form Value": {
+      "main": [
+        [
+          {
+            "node": "Check Form Value Validity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Row Value": {
+      "main": [
+        [
+          {
+            "node": "Embed Form Value",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send message and wait for response": {
+      "main": [
+        [
+          {
+            "node": "Validate Form Value",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Callback Query": {
+      "main": [
+        [
+          {
+            "node": "Get Row Value",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Category": {
+      "main": [
+        [
+          {
+            "node": "Send Success Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Category": {
+      "main": [
+        [
+          {
+            "node": "Update Category",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embed Form Value": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Show Change Category",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send message and wait for response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Parse Category",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit a text message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Confirmation Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Delete rows or columns from sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Callback Query": {
+      "main": [
+        [
+          {
+            "node": "Parse Callback Query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many messages": {
+      "main": [
+        [
+          {
+            "node": "Prepare Email for Processing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Data for CSV": {
+      "main": [
+        [
+          {
+            "node": "Update Row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Determine Grab Transaction Category": {
+      "main": [
+        [
+          {
+            "node": "Format Data for CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Grab Transaction ID": {
+      "main": [
+        [
+          {
+            "node": "Search for Grab E-Receipt with Specific ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search for Grab E-Receipt with Specific ID": {
+      "main": [
+        [
+          {
+            "node": "Determine Grab Transaction Category",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Data for Parsing": {
+      "main": [
+        [
+          {
+            "node": "Should Do Special Parsing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Should Do Special Parsing": {
+      "main": [
+        [
+          {
+            "node": "Get Grab Transaction ID",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Format Data for CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Initial Message": {
+      "main": [
+        [
+          {
+            "node": "Get many messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send Initial Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Parse Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Row": {
+      "main": [
+        [
+          {
+            "node": "Get All Rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Rows": {
+      "main": [
+        [
+          {
+            "node": "Get Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Email": {
+      "main": [
+        [
+          {
+            "node": "Format Data for Parsing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Summary": {
+      "main": [
+        [
+          {
+            "node": "Format Notification Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Notification Message": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Multiple Emails": {
+      "main": [
+        [
+          {
+            "node": "Process Batch Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a574b6d4-4cf9-4af8-969b-7766bfac32a5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "959279e10dacc9ada102ec1a2b8cf3ac45c154a1d68a596542a7b36aa0457a2b"
+  },
+  "id": "HzTFuKAdo9jyrMGK",
+  "tags": [
+    {
+      "createdAt": "2025-07-13T05:26:19.494Z",
+      "updatedAt": "2025-07-13T05:26:19.494Z",
+      "id": "rbWFlrUzgAqZ1ine",
+      "name": "PROD"
+    }
+  ]
+}
