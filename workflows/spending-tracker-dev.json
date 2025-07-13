@@ -227,8 +227,8 @@
       "name": "Bulk Update",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "NutGfEURAzbwzI53",
-          "name": "[PROD] Google Sheets"
+          "id": "hUAzqwp1HvuLoRqy",
+          "name": "[PROD] Google Sheets "
         }
       }
     },
@@ -277,8 +277,8 @@
       "name": "Message a model",
       "credentials": {
         "openAiApi": {
-          "id": "h4ZNbF0PVebEzEq4",
-          "name": "[PROD] - Spending Buddy - OpenAI "
+          "id": "OF2IT8CaE50EAllK",
+          "name": "[PROD] Spending Buddy - OpenAI"
         }
       }
     },
@@ -423,8 +423,8 @@
       "name": "Delete rows or columns from sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "NutGfEURAzbwzI53",
-          "name": "[PROD] Google Sheets"
+          "id": "hUAzqwp1HvuLoRqy",
+          "name": "[PROD] Google Sheets "
         }
       }
     },
@@ -661,8 +661,8 @@
       "name": "Append or update row in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "NutGfEURAzbwzI53",
-          "name": "[PROD] Google Sheets"
+          "id": "hUAzqwp1HvuLoRqy",
+          "name": "[PROD] Google Sheets "
         }
       }
     },
@@ -787,8 +787,8 @@
       "name": "Get Row Value",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "NutGfEURAzbwzI53",
-          "name": "[PROD] Google Sheets"
+          "id": "hUAzqwp1HvuLoRqy",
+          "name": "[PROD] Google Sheets "
         }
       }
     },
@@ -1116,8 +1116,8 @@
       "alwaysOutputData": false,
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "NutGfEURAzbwzI53",
-          "name": "[PROD] Google Sheets"
+          "id": "hUAzqwp1HvuLoRqy",
+          "name": "[PROD] Google Sheets "
         }
       }
     },
@@ -1731,8 +1731,8 @@
       "name": "Update Row",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "NutGfEURAzbwzI53",
-          "name": "[PROD] Google Sheets"
+          "id": "hUAzqwp1HvuLoRqy",
+          "name": "[PROD] Google Sheets "
         }
       }
     },
@@ -2054,8 +2054,8 @@
       "name": "Get All Rows",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "NutGfEURAzbwzI53",
-          "name": "[PROD] Google Sheets"
+          "id": "hUAzqwp1HvuLoRqy",
+          "name": "[PROD] Google Sheets "
         }
       }
     },
@@ -2091,8 +2091,8 @@
       "name": "Parse Email",
       "credentials": {
         "openAiApi": {
-          "id": "h4ZNbF0PVebEzEq4",
-          "name": "[PROD] - Spending Buddy - OpenAI "
+          "id": "OF2IT8CaE50EAllK",
+          "name": "[PROD] Spending Buddy - OpenAI"
         }
       }
     },
