@@ -1,5 +1,5 @@
 {
-  "name": "[PROD] Spending Buddy - Expense Tracker",
+  "name": "[PROD] Spending Buddy",
   "nodes": [
     {
       "parameters": {
@@ -7,11 +7,8 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        -1480,
-        0
-      ],
-      "id": "aaf1ae3d-8f6e-4cb0-a717-1d326bdddc07",
+      "position": [-1560, -40],
+      "id": "a7ee4598-4f93-40ed-9787-738d6e729e63",
       "name": "Extract Summary"
     },
     {
@@ -41,17 +38,14 @@
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
-      "position": [
-        -1260,
-        0
-      ],
-      "id": "e5786a80-90a8-48f6-add9-7c99cea2fa56",
+      "position": [-1340, -40],
+      "id": "f355de4f-4f0e-4215-99a6-c646a96f2754",
       "name": "Send Bulk Import Summary",
       "webhookId": "8ff72ad0-3729-435a-a949-de0ca476fb8f",
       "credentials": {
         "telegramApi": {
-          "id": "KSpHlwkWmLlEx5TB",
-          "name": "[PROD] - Spending Buddy - Telegram"
+          "id": "pu6LKLZ6CNjG9jqz",
+          "name": "[PROD] Spending Buddy - Telegram"
         }
       }
     },
@@ -75,9 +69,7 @@
         "columns": {
           "mappingMode": "autoMapInputData",
           "value": {},
-          "matchingColumns": [
-            "id"
-          ],
+          "matchingColumns": ["id"],
           "schema": [
             {
               "id": "id",
@@ -219,11 +211,8 @@
       },
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
-      "position": [
-        -1700,
-        0
-      ],
-      "id": "59d6c043-f34e-4250-ab2a-1d9be9da28aa",
+      "position": [-1780, -40],
+      "id": "916a885e-8756-48cd-bb0f-e9fb479fe7a5",
       "name": "Bulk Update",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -238,11 +227,8 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        -1920,
-        0
-      ],
-      "id": "7d68f8a0-4dee-4059-9ec1-9cc79702ece8",
+      "position": [-2000, -40],
+      "id": "3803c204-623a-4f95-8394-b9b39571b82c",
       "name": "Process Batch Result"
     },
     {
@@ -251,11 +237,8 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        -2500,
-        0
-      ],
-      "id": "604c09ae-0a63-4e47-830d-2de3fc9a0aa6",
+      "position": [-2580, -40],
+      "id": "b6653de5-2a2f-4f71-91e4-81d83f635cde",
       "name": "Batch Process Emails"
     },
     {
@@ -285,11 +268,8 @@
       },
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
-      "position": [
-        -2720,
-        -100
-      ],
-      "id": "52e23f5f-d26a-49fa-95f6-dbb775c13bce",
+      "position": [-2800, -140],
+      "id": "a801c6fb-6fa7-4d87-b6a1-09646d452172",
       "name": "Check if Start Message"
     },
     {
@@ -303,17 +283,14 @@
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
-      "position": [
-        -2500,
-        -200
-      ],
-      "id": "af827ef7-0bac-4607-b7c8-bc10c0edae2d",
+      "position": [-2580, -240],
+      "id": "c6d0fc0a-0559-4a73-b120-0182ef22afc4",
       "name": "Send Processing Start Message",
       "webhookId": "d18f3aa7-ce58-44cc-98f6-448d584f441f",
       "credentials": {
         "telegramApi": {
-          "id": "KSpHlwkWmLlEx5TB",
-          "name": "[PROD] - Spending Buddy - Telegram"
+          "id": "pu6LKLZ6CNjG9jqz",
+          "name": "[PROD] Spending Buddy - Telegram"
         }
       }
     },
@@ -323,11 +300,8 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        -2940,
-        -100
-      ],
-      "id": "9e656363-4531-43d0-8433-62a5291f81bb",
+      "position": [-3020, -140],
+      "id": "d67a8eba-33ca-466e-998a-46af59cabdc8",
       "name": "Prepare Email for Processing"
     },
     {
@@ -343,17 +317,14 @@
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
-      "position": [
-        -2500,
-        1600
-      ],
-      "id": "1fa728eb-240e-43c7-ae34-f58ed42a3f3b",
+      "position": [-2580, 1555],
+      "id": "7e054cc6-ef7b-4624-9433-e6f2f0439c24",
       "name": "Send Success Delete Message",
       "webhookId": "5cab123e-e233-4b4c-bc77-e57d7d575798",
       "credentials": {
         "telegramApi": {
-          "id": "KSpHlwkWmLlEx5TB",
-          "name": "[PROD] - Spending Buddy - Telegram"
+          "id": "pu6LKLZ6CNjG9jqz",
+          "name": "[PROD] Spending Buddy - Telegram"
         }
       }
     },
@@ -378,11 +349,8 @@
       },
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
-      "position": [
-        -2720,
-        1600
-      ],
-      "id": "e1bdd616-dd43-499f-b2b5-02abb223ac11",
+      "position": [-2800, 1555],
+      "id": "1cdf27a7-1e76-40b8-84e1-b34d649c477d",
       "name": "Delete rows or columns from sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -426,59 +394,14 @@
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
-      "position": [
-        -2720,
-        1400
-      ],
-      "id": "06e75944-8b0f-44e2-9cfe-9ecf2aa7a78f",
+      "position": [-2800, 1355],
+      "id": "c25a3907-c891-4ad7-a5c4-347d05cc344c",
       "name": "Send Confirmation Message",
       "webhookId": "fa337f4e-9339-4727-98db-6fefdc1a0af4",
       "credentials": {
         "telegramApi": {
-          "id": "KSpHlwkWmLlEx5TB",
-          "name": "[PROD] - Spending Buddy - Telegram"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "chatId": "={{ $('Parse Callback Query').item.json.chatId }}",
-        "text": "=✅ *Entry Updated Successfully!*\n\n*ID:* `{{ $json.id }}`\n\n💾 Changes saved to Spending Buddy tracker!",
-        "replyMarkup": "inlineKeyboard",
-        "inlineKeyboard": {
-          "rows": [
-            {
-              "row": {
-                "buttons": [
-                  {
-                    "text": "← Back to Main",
-                    "additionalFields": {
-                      "callback_data": "=menu_main_{{ $json.id }}"
-                    }
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "additionalFields": {
-          "appendAttribution": false,
-          "parse_mode": "Markdown"
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        -1840,
-        700
-      ],
-      "id": "04a54919-4c4f-460f-a7f1-d9e0026a11db",
-      "name": "Send Success Message1",
-      "webhookId": "a0376b28-e3a3-4b92-be4b-0025a7929518",
-      "credentials": {
-        "telegramApi": {
-          "id": "KSpHlwkWmLlEx5TB",
-          "name": "[PROD] - Spending Buddy - Telegram"
+          "id": "pu6LKLZ6CNjG9jqz",
+          "name": "[PROD] Spending Buddy - Telegram"
         }
       }
     },
@@ -508,9 +431,7 @@
             "merchant": "={{ $json.originalData.Merchant }}",
             "bank": "={{ $json.originalData.Bank }}"
           },
-          "matchingColumns": [
-            "id"
-          ],
+          "matchingColumns": ["id"],
           "schema": [
             {
               "id": "id",
@@ -616,11 +537,8 @@
       },
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
-      "position": [
-        -2060,
-        700
-      ],
-      "id": "6210b072-f7c0-4a8e-9884-a6a961042260",
+      "position": [-2140, 655],
+      "id": "50c97885-3f3a-4d35-a4a7-a11ee42f84ec",
       "name": "Append or update row in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -640,17 +558,14 @@
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
-      "position": [
-        -2060,
-        900
-      ],
-      "id": "778bd26b-00af-4976-b078-7fce2b691b38",
+      "position": [-2140, 855],
+      "id": "5804a486-92f7-4f45-8107-31853f9f8875",
       "name": "Send Error Message",
       "webhookId": "6159cf38-84d8-4e8b-b852-7214acfef65b",
       "credentials": {
         "telegramApi": {
-          "id": "KSpHlwkWmLlEx5TB",
-          "name": "[PROD] - Spending Buddy - Telegram"
+          "id": "pu6LKLZ6CNjG9jqz",
+          "name": "[PROD] Spending Buddy - Telegram"
         }
       }
     },
@@ -681,11 +596,8 @@
       },
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
-      "position": [
-        -2280,
-        800
-      ],
-      "id": "2ca1a3f7-de40-4ef0-a56f-a277088d1ea1",
+      "position": [-2360, 755],
+      "id": "37867282-b665-4721-b61c-d8c8f3e7e105",
       "name": "Check Form Value Validity"
     },
     {
@@ -694,11 +606,8 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        -2500,
-        800
-      ],
-      "id": "0819d0aa-b200-4065-909a-24f3b70c3b27",
+      "position": [-2580, 755],
+      "id": "b7007838-330d-4fb4-b063-d5c2def7ea01",
       "name": "Validate Form Value"
     },
     {
@@ -707,11 +616,8 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        -3160,
-        1100
-      ],
-      "id": "1b384aa7-648f-4df8-b8b4-4d5fcbebb4a5",
+      "position": [-3240, 1055],
+      "id": "9c5bfbb3-8e61-4c2d-be4f-cc551ea903fc",
       "name": "Embed Form Value"
     },
     {
@@ -742,11 +648,8 @@
       },
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
-      "position": [
-        -3380,
-        1100
-      ],
-      "id": "fcadb158-a0c4-4a7e-98e2-8e74b5ff10e6",
+      "position": [-3460, 1055],
+      "id": "179d4cd7-43d6-4d75-978b-ded3420f4de9",
       "name": "Get Row Value",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -794,17 +697,14 @@
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
-      "position": [
-        -2720,
-        800
-      ],
-      "id": "f2a9ffc1-5550-47f9-9f76-afcf874ea50f",
+      "position": [-2800, 755],
+      "id": "2737452b-057c-4d1b-b6a9-dba4fc2ab80b",
       "name": "Send message and wait for response",
       "webhookId": "33a402cb-9779-462b-8d14-0a8bc31d34bd",
       "credentials": {
         "telegramApi": {
-          "id": "KSpHlwkWmLlEx5TB",
-          "name": "[PROD] - Spending Buddy - Telegram"
+          "id": "pu6LKLZ6CNjG9jqz",
+          "name": "[PROD] Spending Buddy - Telegram"
         }
       }
     },
@@ -855,17 +755,14 @@
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
-      "position": [
-        -2720,
-        1200
-      ],
-      "id": "983a2118-deb3-47c7-a283-ef4708d1a7a5",
+      "position": [-2800, 1155],
+      "id": "b908ae9c-262c-4ee4-a711-3cdba74e6d78",
       "name": "Edit a text message",
       "webhookId": "1d85f979-5530-45ce-bb2e-c16d256e4f97",
       "credentials": {
         "telegramApi": {
-          "id": "KSpHlwkWmLlEx5TB",
-          "name": "[PROD] - Spending Buddy - Telegram"
+          "id": "pu6LKLZ6CNjG9jqz",
+          "name": "[PROD] Spending Buddy - Telegram"
         }
       }
     },
@@ -875,11 +772,8 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        -3600,
-        1100
-      ],
-      "id": "0533d38c-d96b-496d-b1f5-ef7da10c8078",
+      "position": [-3680, 1055],
+      "id": "df143c80-f1cd-452a-9261-201cd0fdcc06",
       "name": "Parse Callback Query"
     },
     {
@@ -911,17 +805,14 @@
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
-      "position": [
-        -2280,
-        1000
-      ],
-      "id": "bf9e2b88-9349-49d0-8f62-ecfef4e5b47d",
+      "position": [-2360, 955],
+      "id": "d5517cd3-f05a-4c17-a78d-1dbdff2b860f",
       "name": "Send Success Message",
       "webhookId": "3089f611-1b46-471a-9fe7-ed0b5d7775a2",
       "credentials": {
         "telegramApi": {
-          "id": "KSpHlwkWmLlEx5TB",
-          "name": "[PROD] - Spending Buddy - Telegram"
+          "id": "pu6LKLZ6CNjG9jqz",
+          "name": "[PROD] Spending Buddy - Telegram"
         }
       }
     },
@@ -948,9 +839,7 @@
             "id": "={{ $json.expenseId }}",
             "category": "={{ $json.newCategory }}"
           },
-          "matchingColumns": [
-            "id"
-          ],
+          "matchingColumns": ["id"],
           "schema": [
             {
               "id": "id",
@@ -1070,11 +959,8 @@
       },
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
-      "position": [
-        -2500,
-        1000
-      ],
-      "id": "4f348f8b-903d-49cf-b847-24ce34f785ae",
+      "position": [-2580, 955],
+      "id": "5bbfb05c-0d04-46c9-860c-bb1a5415aafa",
       "name": "Update Category",
       "alwaysOutputData": false,
       "credentials": {
@@ -1091,11 +977,8 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        -2720,
-        1000
-      ],
-      "id": "ccdc5fa0-5658-4c9d-9aff-cec3f2911676",
+      "position": [-2800, 955],
+      "id": "15d2abec-ad69-4701-a5d5-f8544c60bf8f",
       "name": "Parse Category"
     },
     {
@@ -1199,17 +1082,14 @@
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
-      "position": [
-        -2720,
-        600
-      ],
-      "id": "79efae60-3b29-4c6e-9a3e-817290b2766d",
+      "position": [-2800, 555],
+      "id": "e07cb237-fb28-45b0-b800-5cc72eff6e9c",
       "name": "Show Change Category",
       "webhookId": "b7f113ae-9714-420c-a5e3-5c331b9b86df",
       "credentials": {
         "telegramApi": {
-          "id": "KSpHlwkWmLlEx5TB",
-          "name": "[PROD] - Spending Buddy - Telegram"
+          "id": "pu6LKLZ6CNjG9jqz",
+          "name": "[PROD] Spending Buddy - Telegram"
         }
       }
     },
@@ -1374,33 +1254,25 @@
       },
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
-      "position": [
-        -2940,
-        1040
-      ],
-      "id": "7cbe7682-f418-4c3e-bb37-4a18ba365161",
+      "position": [-3020, 995],
+      "id": "d37ce068-02f0-4118-87e2-b0132226dc07",
       "name": "Switch"
     },
     {
       "parameters": {
-        "updates": [
-          "callback_query"
-        ],
+        "updates": ["callback_query"],
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
-      "position": [
-        -3820,
-        1100
-      ],
-      "id": "0a673578-727e-4486-aba8-29ced13a266a",
+      "position": [-3900, 1055],
+      "id": "236b42c9-f126-41a3-a8ec-7c3954ba2b73",
       "name": "Callback Query",
       "webhookId": "e378822f-f6f8-48b3-a33a-13ee94ba5464",
       "credentials": {
         "telegramApi": {
-          "id": "KSpHlwkWmLlEx5TB",
-          "name": "[PROD] - Spending Buddy - Telegram"
+          "id": "pu6LKLZ6CNjG9jqz",
+          "name": "[PROD] Spending Buddy - Telegram"
         }
       }
     },
@@ -1417,17 +1289,14 @@
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
-      "position": [
-        -3160,
-        -100
-      ],
-      "id": "a5fd971c-da01-432c-a536-a4fbcf5510c6",
+      "position": [-3240, -140],
+      "id": "368059ab-1cf8-4a12-8f94-46fb6a5340df",
       "name": "Get many messages",
       "webhookId": "48212619-6760-4262-a0dd-1aa6a6104a88",
       "credentials": {
         "gmailOAuth2": {
-          "id": "zgqNK6c2ZHfTn7re",
-          "name": "[PROD] Gmail"
+          "id": "RFya2JEV38OqBbXs",
+          "name": "[PROD] Gmail Account"
         }
       }
     },
@@ -1507,11 +1376,8 @@
       },
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [
-        -1920,
-        340
-      ],
-      "id": "52a632e4-aabc-4e0d-a695-43013888fd52",
+      "position": [-2000, 295],
+      "id": "7f551570-e515-47e4-bb5b-683f7d21f00a",
       "name": "Format Data for CSV"
     },
     {
@@ -1534,9 +1400,7 @@
         "columns": {
           "mappingMode": "autoMapInputData",
           "value": {},
-          "matchingColumns": [
-            "id"
-          ],
+          "matchingColumns": ["id"],
           "schema": [
             {
               "id": "id",
@@ -1686,11 +1550,8 @@
       },
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
-      "position": [
-        -1700,
-        340
-      ],
-      "id": "3f72bd90-846d-4756-8cad-7b92604ef30f",
+      "position": [-1780, 295],
+      "id": "296b7c62-1d1a-42cf-b9c3-c17debdb0b5c",
       "name": "Update Row",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -1705,11 +1566,8 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        -2140,
-        260
-      ],
-      "id": "1380ee69-764a-44b7-bab6-076d17d01a12",
+      "position": [-2220, 220],
+      "id": "4edde6ac-4d77-43ba-abe5-a0edd9c051ac",
       "name": "Determine Grab Transaction Category"
     },
     {
@@ -1718,11 +1576,8 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        -2580,
-        260
-      ],
-      "id": "e17a1be7-a09d-4778-a1f8-d6ecb69f3ce1",
+      "position": [-2660, 220],
+      "id": "6c13c31f-7315-427c-87d0-4dae4d9a4a2f",
       "name": "Get Grab Transaction ID"
     },
     {
@@ -1736,17 +1591,14 @@
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
-      "position": [
-        -2360,
-        260
-      ],
-      "id": "05af6184-40bb-49df-8307-11ab639eea47",
+      "position": [-2440, 220],
+      "id": "2d99a293-45cf-4bcd-b0a0-07b7f184ac3d",
       "name": "Search for Grab E-Receipt with Specific ID",
       "webhookId": "d71384d6-64d4-4a75-8d42-b1147f05d58f",
       "credentials": {
         "gmailOAuth2": {
-          "id": "zgqNK6c2ZHfTn7re",
-          "name": "[PROD] Gmail"
+          "id": "RFya2JEV38OqBbXs",
+          "name": "[PROD] Gmail Account"
         }
       }
     },
@@ -1832,11 +1684,8 @@
       },
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [
-        -3020,
-        340
-      ],
-      "id": "ec1235bc-351a-4b14-b0c5-11f932ab15ca",
+      "position": [-3100, 295],
+      "id": "e1e3aa5c-1d71-454e-98a8-d15414f6892f",
       "name": "Format Data for Parsing"
     },
     {
@@ -1865,11 +1714,8 @@
       },
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
-      "position": [
-        -2800,
-        340
-      ],
-      "id": "d4b10337-49de-4e54-a91f-82d38ecfeb69",
+      "position": [-2880, 295],
+      "id": "1262a812-12a4-4975-88fd-b5dab22915ed",
       "name": "Should Do Special Parsing"
     },
     {
@@ -1882,17 +1728,14 @@
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
-      "position": [
-        -3380,
-        -100
-      ],
-      "id": "8b2b2bf4-df4d-4b3b-9bce-95fcd2e73900",
+      "position": [-3460, -140],
+      "id": "bcd48d74-415c-4111-83d8-42834f7a806a",
       "name": "Send Initial Message",
       "webhookId": "5bb64ab4-a049-4d49-8dd8-599c7dd14f02",
       "credentials": {
         "telegramApi": {
-          "id": "KSpHlwkWmLlEx5TB",
-          "name": "[PROD] - Spending Buddy - Telegram"
+          "id": "pu6LKLZ6CNjG9jqz",
+          "name": "[PROD] Spending Buddy - Telegram"
         }
       }
     },
@@ -1933,33 +1776,25 @@
       },
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
-      "position": [
-        -3600,
-        -100
-      ],
-      "id": "5988580e-0387-45da-86b4-8826d1d53c70",
+      "position": [-3680, -140],
+      "id": "ceb01061-b210-4374-8a66-a26e4ca356a3",
       "name": "If"
     },
     {
       "parameters": {
-        "updates": [
-          "message"
-        ],
+        "updates": ["message"],
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
-      "position": [
-        -3820,
-        -100
-      ],
-      "id": "521af205-4786-4b59-9383-76f6a3778fd6",
+      "position": [-3900, -140],
+      "id": "cc75a835-baf0-4c3b-8f45-325152dbc0de",
       "name": "Telegram Trigger",
       "webhookId": "31f7edf7-9c33-41e7-a42f-6bd08848e5f1",
       "credentials": {
         "telegramApi": {
-          "id": "KSpHlwkWmLlEx5TB",
-          "name": "[PROD] - Spending Buddy - Telegram"
+          "id": "pu6LKLZ6CNjG9jqz",
+          "name": "[PROD] Spending Buddy - Telegram"
         }
       }
     },
@@ -1969,11 +1804,8 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        -3600,
-        340
-      ],
-      "id": "8ea118fd-95fd-4978-997d-79b2687c6e3e",
+      "position": [-3680, 295],
+      "id": "1c467dba-d46b-4461-994f-6bbbfaa461d6",
       "name": "Code"
     },
     {
@@ -1982,11 +1814,8 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        -1260,
-        340
-      ],
-      "id": "522eb0a7-e911-48b4-a873-b91df01a6744",
+      "position": [-1340, 295],
+      "id": "675de20c-d9f7-41cd-98ba-6deb13e5ffcc",
       "name": "Get Summary"
     },
     {
@@ -2009,11 +1838,8 @@
       },
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
-      "position": [
-        -1480,
-        340
-      ],
-      "id": "ceea754c-f26e-499f-8594-41fc3312554c",
+      "position": [-1560, 295],
+      "id": "76e01558-60c1-47c4-9493-50c6ade6f952",
       "name": "Get All Rows",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -2046,11 +1872,8 @@
       },
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
-      "position": [
-        -3380,
-        340
-      ],
-      "id": "66cb840a-0c25-4c88-8854-1a6be9751521",
+      "position": [-3460, 295],
+      "id": "774ec9b6-f501-45f0-ba80-0795af5064a8",
       "name": "Parse Email",
       "credentials": {
         "openAiApi": {
@@ -2104,17 +1927,14 @@
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
-      "position": [
-        -820,
-        340
-      ],
-      "id": "c55ff1e9-f77b-4b8e-9873-64db265670e9",
+      "position": [-900, 295],
+      "id": "44bf8d40-00af-41fb-bde8-8aa68b5f726c",
       "name": "Send a text message",
       "webhookId": "3e325a63-b1af-4143-b61c-0913436cb9e2",
       "credentials": {
         "telegramApi": {
-          "id": "KSpHlwkWmLlEx5TB",
-          "name": "[PROD] - Spending Buddy - Telegram"
+          "id": "pu6LKLZ6CNjG9jqz",
+          "name": "[PROD] Spending Buddy - Telegram"
         }
       }
     },
@@ -2138,16 +1958,13 @@
       },
       "type": "n8n-nodes-base.gmailTrigger",
       "typeVersion": 1.2,
-      "position": [
-        -3820,
-        340
-      ],
-      "id": "2db5c519-814b-478f-a1b5-45d4562e67eb",
+      "position": [-3900, 295],
+      "id": "b0f6c63c-33c6-4615-a14b-0060f6fc3a7f",
       "name": "Gmail Trigger",
       "credentials": {
         "gmailOAuth2": {
-          "id": "zgqNK6c2ZHfTn7re",
-          "name": "[PROD] Gmail"
+          "id": "RFya2JEV38OqBbXs",
+          "name": "[PROD] Gmail Account"
         }
       }
     },
@@ -2157,11 +1974,8 @@
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        -1040,
-        340
-      ],
-      "id": "62dba483-6e6a-40d0-9b43-73cb4a9caadb",
+      "position": [-1120, 295],
+      "id": "58cffe21-a043-4277-b1f9-313443a88560",
       "name": "Format Notification Message"
     },
     {
@@ -2188,16 +2002,52 @@
       },
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
-      "position": [
-        -2280,
-        0
-      ],
-      "id": "308b4269-8e6e-44ea-9872-e0847c3d94b1",
+      "position": [-2360, -40],
+      "id": "4cfc3307-e431-45d1-9a2b-2e66b8b3a77b",
       "name": "Parse Multiple Emails",
       "credentials": {
         "openAiApi": {
           "id": "OF2IT8CaE50EAllK",
           "name": "[PROD] Spending Buddy - OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Parse Callback Query').item.json.chatId }}",
+        "text": "=✅ *Entry Updated Successfully!*\n\n*ID:* `{{ $json.id }}`\n\n💾 Changes saved to Spending Buddy tracker!",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "← Back to Main",
+                    "additionalFields": {
+                      "callback_data": "=menu_main_{{ $json.id }}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [-1920, 655],
+      "id": "a426e7fd-6f1b-40bb-885f-3346eef94d3b",
+      "name": "Send Success Update Entry",
+      "webhookId": "a0376b28-e3a3-4b92-be4b-0025a7929518",
+      "credentials": {
+        "telegramApi": {
+          "id": "pu6LKLZ6CNjG9jqz",
+          "name": "[PROD] Spending Buddy - Telegram"
         }
       }
     }
@@ -2292,7 +2142,7 @@
       "main": [
         [
           {
-            "node": "Send Success Message1",
+            "node": "Send Success Update Entry",
             "type": "main",
             "index": 0
           }
@@ -2661,17 +2511,17 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "a574b6d4-4cf9-4af8-969b-7766bfac32a5",
+  "versionId": "b87345ad-4bbd-4909-8b64-e9a77c86c019",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "959279e10dacc9ada102ec1a2b8cf3ac45c154a1d68a596542a7b36aa0457a2b"
+    "instanceId": "4837f872870ec1c0a06535d0c1bdd9a2a4a685964a406dd69f4b7b49d5afd753"
   },
-  "id": "HzTFuKAdo9jyrMGK",
+  "id": "HyGc4kTBZUHAbuLa",
   "tags": [
     {
-      "createdAt": "2025-07-13T05:26:19.494Z",
-      "updatedAt": "2025-07-13T05:26:19.494Z",
-      "id": "rbWFlrUzgAqZ1ine",
+      "createdAt": "2025-07-13T14:05:16.157Z",
+      "updatedAt": "2025-07-13T14:05:16.157Z",
+      "id": "s0BRZNeF6R32SV8p",
       "name": "PROD"
     }
   ]
